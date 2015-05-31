@@ -153,6 +153,11 @@ ul.posts {
 }
 
   /* standard */
+  #post blockquote {
+    padding: 1px 20px;
+    margin: 0 0 20px;
+    border-left: 5px solid #eee;
+  }
 
   #post pre {
     border: 1px solid #ddd;
