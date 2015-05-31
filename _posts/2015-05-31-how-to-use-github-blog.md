@@ -16,10 +16,10 @@ title: 如何在github优雅地写blog(vim+git+Jekyll+mardown)
 1. 创建github page, 如[我的github page](https://github.com/richard2011/richard2011.github.com)
 
 2. Jekyll，静态网页生成器.基本目录结构:
-* _config.yml, 配置文件
-* _layouts,包含default.html,post.html,模板 
-* _posts,包含2015-06-01-github-blog.md,内容
-* index.html,首页
+    * _config.yml, 配置文件
+    * _layouts,包含default.html,post.html,模板 
+    * _posts,包含2015-06-01-github-blog.md,内容
+    * index.html,首页
 
 3. vim, 安装插件:pathogen,nerdtree,vim-markdown。配置：语法提示syn on,最爱的配色 colorscheme desert
 
