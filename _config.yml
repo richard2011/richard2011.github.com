@@ -1,1 +1,5 @@
-
+markdown: redcarpet
+highlights: pygments
+lsi: false
+timezone: Asia/Shanghai
+safe: false
