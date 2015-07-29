@@ -1,5 +1,14 @@
-markdown: redcarpet
+markdown: rdiscount
 highlights: pygments
 lsi: false
 timezone: Asia/Shanghai
 safe: false
+name:richard's blog 
+description: richard's blog | Stop talking, start doing.
+author: richard 
+email: 364374779@qq.com
+duoshuo:richard 
+permalink: /:title/
+paginate: 100
+about: "程序员一枚。"
+
