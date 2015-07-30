@@ -32,8 +32,14 @@ Dapper基本原则。
 
 阿里鹰眼(EagleEye) | witter zipkin | 京东hydra | 新浪微博 watchman |
 --------------- | -------------   | ------------- | ------------- | 
-入口为web页面，无线和开放平台API，所有中间件都是自己，埋点有先生优势。  | zipkin已经被集成到一些基础的框架和类库之中。GC logs也被作为数据来源的一项  | 入口为Dubbo，仅仅实现dubbo调用跟踪，扩展dubbo filter + ThreadLocal | 利用字节码增强方式（javaagent）+ ThreadLocal。对非RPC场景。 | 对RPC场景,使用Motan（自身PRC框架）filter + ThreadLocal（跟京东类似）|
+入口为web页面，无线和开放平台API，所有中间件都是自己，埋点有先生优势。  | zipkin已经被集成到一些基础的框架和类库之中。GC logs也被作为数据来源的一项  | 入口为Dubbo，仅仅实现dubbo调用跟踪，扩展dubbo filter + ThreadLocal | 利用字节码增强方式（javaagent）+ ThreadLocal。对非RPC场景。对RPC场景,使用Motan（自身PRC框架）filter + ThreadLocal（跟京东类似）| 
+hash(traceId)，比如采样率被设置为10时，只有hash(traceId) mod 10的值等于0的日志才会输出。| 自适应采样 | 固定时间段内固定跟踪数量的采样，如1秒内超过100，只取10% | 阀门策略，顾名思义，就像一个阀门，用来控制流量的大小，或是开启/关闭。 |
+异步log,日志收集agent(应该实现类似flume) | Scribe作为日志收集传输 | 用Java并发库中ArrayBlockingQueue，然后通过dubbo 协议传输 | 异步log，Scribe作为日志收集传输 |
+基于数据库：用traceId关联查询，基于Hbase：TraceId做rowkey,实时性强。基于HDFS:顺序存储，后续MapReduce汇总。| 最先使用的是Cassandra，后来加入了Redis, HBase, MySQL, PostgreSQL, SQLite, and H2等存储系统的支持 | 支持Mysql和Hbase | HBASE、HDFS、Storm |
 
+## 参考
+1. [Dapper，大规模分布式系统的跟踪系统](http://bigbully.github.io/Dapper-translation/)
+2. [唯品会Microscope——大规模分布式系统的跟踪、监控、告警平台](http://blog.csdn.net/alex19881006/article/details/24381109)
 
 
 
