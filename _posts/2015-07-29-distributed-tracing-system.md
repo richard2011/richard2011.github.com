@@ -37,9 +37,36 @@ hash(traceId)，比如采样率被设置为10时，只有hash(traceId) mod 10的
 异步log,日志收集agent(应该实现类似flume) | Scribe作为日志收集传输 | 用Java并发库中ArrayBlockingQueue，然后通过dubbo 协议传输 | 异步log，Scribe作为日志收集传输 |
 基于数据库：用traceId关联查询，基于Hbase：TraceId做rowkey,实时性强。基于HDFS:顺序存储，后续MapReduce汇总。| 最先使用的是Cassandra，后来加入了Redis, HBase, MySQL, PostgreSQL, SQLite, and H2等存储系统的支持 | 支持Mysql和Hbase | HBASE、HDFS、Storm |
 
+总结：链路监控的核心是：用一个全局的 ID将分布式请求串接起来，在JVM内部通过ThreadLocal传递，在跨JVM调用的时候，通过中间件（http header, framework）将全局ID传递出去，这样就可以将分布式调用串联起来。关于埋点，京东hydra是最简单方案，阿里鹰眼是最强大是也是最复杂的，twriiter zipkin GC logs 收集和新浪微博 watchman的非rpc jvm跟踪是个亮点。关于存储和分析，都采用了HBASE.
+
+## 概念
+**trace**:一次服务调用追踪链路。
+
+**span**:追踪服务调基本结构，一次完整的调用（一来一回）称为span。一个span 多个anntion，多个span组成一次trace。
+
+**annotation**:在span中的标注点，记录整个span时间段内发生的事件（包括ip、port、 timestamp）。
+
+**binaryAnnotation**:属于Annotation一种类型和普通Annotation区别，其实就是一个k-v对，记录任何跟踪系统想记录的信息，比如服务调用中的异常信息，重要的业务信息等等。
+
+**cs**: Client Send, span的开始。
+
+**sr**: Server Receive, 接受请求并开始处理。
+
+**ss**: Server Send, 处理完成并返回
+
+**cr**: Client Receive, 客户端接收，span结束。
+
+总时间 = cr(timestamp) - cs(timestamp)
+
+服务调用时间 = ss(timestamp) - sr(timestamp)
+
+
 ## 参考
 1. [Dapper，大规模分布式系统的跟踪系统](http://bigbully.github.io/Dapper-translation/)
 2. [唯品会Microscope——大规模分布式系统的跟踪、监控、告警平台](http://blog.csdn.net/alex19881006/article/details/24381109)
+3. [Zipkin](https://twitter.github.io/zipkin/)
+4. [阿里鹰眼](http://wenku.baidu.com/link?url=xsorjRmT7vuIedegixzLF5uC4q5KooXqC-ePnPRKm1eunUDfnjU3vDlPkZqWgHbSCUJUIUivM8FnVCsMZcde0xTxCUu9t0DVFhDKLJdBQye)
+5. [Watchman系统](http://www.infoq.com/cn/articles/weibo-watchman)
 
 
 
