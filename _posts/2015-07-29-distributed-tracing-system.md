@@ -39,6 +39,13 @@ hash(traceId)，比如采样率被设置为10时，只有hash(traceId) mod 10的
 
 总结：链路监控的核心是：用一个全局的 ID将分布式请求串接起来，在JVM内部通过ThreadLocal传递，在跨JVM调用的时候，通过中间件（http header, framework）将全局ID传递出去，这样就可以将分布式调用串联起来。关于埋点，京东hydra是最简单方案，阿里鹰眼是最强大是也是最复杂的，twriiter zipkin GC logs 收集和新浪微博 watchman的非rpc jvm跟踪是个亮点。关于存储和分析，都采用了HBASE.
 
+## 实现细节
+1. 埋点
+* 前端型：生成traceId，创建(cs)，结束调用链(cr)。
+* 双向型：客户端+服务端，传输上下文。图中c。扩展dubbo filter 取RPC调用前后信息，通过ThreadLocal传递parentSpan，最后写到日志里。
+* 单向型：仅客户端（服务端未埋点）。我可以从中些中间件java client入手进行cs,cr埋点。如jedis封装进行日志输出。
+
+
 ## 概念
 **trace**:一次服务调用追踪链路。
 
