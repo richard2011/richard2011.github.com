@@ -28,7 +28,7 @@ Kafka与传统MQ最大不同的是
 
 ## 对比
 
-RocketMQ| Kafka | RibbitMQ |
+对比项目 |RocketMQ| Kafka | RibbitMQ |
 --------------- | -------------   | ------------- | ------------- | 
 开发语言  | Java  | Scala | Erlang |
 成熟度 | 开源版存在一定BUG，最后一次更新在大半年前，有商业版ONS |  Apache顶级项目，Linkedin公司支持。最新版本0.8.2.2（2015-10-03发布) | 成熟度高，文档完善，API友好。 |
