@@ -32,11 +32,11 @@ Kafka与传统MQ最大不同的是
 --------------- | -------------   | ------------- | ------------- | 
 开发语言  | Java  | Scala | Erlang| 
 成熟度 | 开源版存在一定BUG，最后一次更新在大半年前，有商业版ONS |  Apache顶级项目，Linkedin公司支持。最新版本0.8.2.2（2015-10-03发布) | 成熟度高，文档完善，API友好。 |
- 管理工具 | 命令行，非官方简易admin | 命令行，非官方简易admin | 官方admin, 功能完善 | 
- 生产消息性能 | 3个broker大概7W msg/sec [注1] | 单个Producer , 786,980 msg/sec (75.1 MB/sec) [注2]<br/>三个Producer, 2,024,032 msg/sec (193.0 MB/sec) | 149,910 msg/sec | 
- 消费消息性能 | 50W msg/sec | 单个Consumer 940,521 msg/sec (89.7 MB/sec)三个Consumer 2,615,968 msg/sec (249.5 MB/sec) | 64,315  msg/sec |
- 生产与消费同时 | 6W msg/sec | 795,064 msg/sec (75.8 MB/sec)  [注3] | 32,005 msg/sec [注4] | 
- 消息堆积 | 亿级 | TB级 | 百万级 
+管理工具 | 命令行，非官方简易admin | 命令行，非官方简易admin | 官方admin, 功能完善 | 
+生产消息性能 | 3个broker大概7W msg/sec [注1] | 单个Producer , 786,980 msg/sec (75.1 MB/sec) [注2]<br/>三个Producer, 2,024,032 msg/sec (193.0 MB/sec) | 149,910 msg/sec | 
+消费消息性能 | 50W msg/sec | 单个Consumer 940,521 msg/sec (89.7 MB/sec)三个Consumer 2,615,968 msg/sec (249.5 MB/sec) | 64,315  msg/sec | 
+生产与消费同时 | 6W msg/sec | 795,064 msg/sec (75.8 MB/sec) [注3] |32,005 msg/sec [注4] | 
+消息堆积 | 亿级 | TB级 | 百万级 |
  
 注：   
 1. 与官方数据出入比较大，可能官方使用SAS磁盘或SSD。官方数据为 『RocketMQ单机写入TPS单实例约7万条/秒，单机部署3个Broker，可以跑到最高12万条/秒，消息大小10个字节』。   
