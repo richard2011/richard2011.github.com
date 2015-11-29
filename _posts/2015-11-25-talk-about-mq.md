@@ -28,9 +28,10 @@ Kafka与传统MQ最大不同的是
 
 ## 对比
 
- | RocketMQ| Kafka | RibbitMQ |
+
+RocketMQ | Kafka | RibbitMQ |
 --------------- | -------------   | ------------- | ------------- | 
-开发语言  | Java  | Scala | Erlang| 
+开发语言  | Java  | Scala | Erlang | 
 
  
 注：   
