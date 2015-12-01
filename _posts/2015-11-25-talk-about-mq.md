@@ -1,6 +1,6 @@
 ---
 layout: post
-title: MQ选型 
+title: 分布式消息队列选型 
 categories: 中间件
 tags: tracing  
 ---
@@ -28,7 +28,7 @@ Kafka与传统MQ最大不同的是
 
 ## 对比
 
-对比项目 |RocketMQ| Kafka | RibbitMQ |
+对比项目 | RocketMQ | Kafka | RibbitMQ |
 --------------- | -------------   | ------------- | ------------- | 
 开发语言  | Java  | Scala | Erlang |
 成熟度 | 开源版存在一定BUG，最后一次更新在大半年前，有商业版ONS |  Apache顶级项目，Linkedin公司支持。最新版本0.8.2.2（2015-10-03发布) | 成熟度高，文档完善，API友好。 |
@@ -37,6 +37,13 @@ Kafka与传统MQ最大不同的是
 消费消息性能 | 50W msg/sec | 单个Consumer 940,521 msg/sec (89.7 MB/sec)三个Consumer 2,615,968 msg/sec (249.5 MB/sec) | 64,315  msg/sec | 
 生产与消费同时 | 6W msg/sec | 795,064 msg/sec (75.8 MB/sec) [注3] | 32,005 msg/sec [注4] | 
 消息堆积 | 亿级 | TB级 | 百万级 |
+消息实时性 | push | 0.8后支持push方式（long poll）| push/push |
+消息传递可靠性 | 多 Master 多 Slave 模式,异步复制，当Master宕机，会丢失少量消息 | 异步复制，当Master宕机，会丢失少量消息。| 基于AMQP协议，具有较高可靠性。|
+消息堆积时性能 | 有无salve会有一定影响 | 得益于顺序写，顺序读。不受堆积影响。 | 堆积用占用大量内存，负载会变高 |
+高可用 | nameserver通过HTTP 静态服务器寻址（2分钟更新,broker主-从 | zookeeper自带高可用,broker副本复制 | 应对网络分区较弱 |
+水平扩展 | 增加broker（1主1从）| 增加broker | 无 |
+
+
  
 注：   
 1. 与官方数据出入比较大，可能官方使用SAS磁盘或SSD。官方数据为 『RocketMQ单机写入TPS单实例约7万条/秒，单机部署3个Broker，可以跑到最高12万条/秒，消息大小10个字节』。   
